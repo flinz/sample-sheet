@@ -538,7 +538,7 @@ class SampleSheet(object):
                 section[key] = value
                 continue
 
-    def add_sample(self, sample: Sample) -> None:
+    def add_sample(self, sample: Sample, validate = True) -> None:
         """Add a :class:`Sample` to this :class:`SampleSheet`.
 
         All samples are validated against the first sample added to the sample
@@ -644,7 +644,7 @@ class SampleSheet(object):
                 )
 
             # Prevent index collisions when samples are dual-indexed
-            if (
+            if validate and (
                 self.samples_have_index
                 and self.samples_have_index2
                 and sample.index == other.index
@@ -657,7 +657,7 @@ class SampleSheet(object):
                 )
 
             # Prevent index collisions when samples are single-indexed (index)
-            if (
+            if validate and (
                 self.samples_have_index
                 and not self.samples_have_index2
                 and sample.index == other.index
@@ -669,7 +669,7 @@ class SampleSheet(object):
                 )
 
             # Prevent index collisions when samples are single-indexed (index2)
-            if (
+            if validate and (
                 not self.samples_have_index
                 and self.samples_have_index2
                 and sample.index2 == other.index2
